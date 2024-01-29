@@ -534,6 +534,67 @@ func PostBox(mongoenv, dbname, collname string, r *http.Request) string {
 	return ReturnStruct(response)
 }
 
+func PostCenter(mongoenv, dbname, collname string, r *http.Request) string {
+	var coordinate Point
+	var response Pesan
+	response.Status = false
+	mconn := SetConnection2dsphere(mongoenv, dbname, collname)
+
+	err := json.NewDecoder(r.Body).Decode(&coordinate)
+
+	if err != nil {
+		response.Message = "Error parsing application/json: " + err.Error()
+		return ReturnStruct(response)
+	}
+
+	response.Status = true
+	response.Message = Center(mconn, collname, coordinate)
+
+	return ReturnStruct(response)
+}
+
+func PostMaxDistance(mongoenv, dbname, collname string, r *http.Request) string {
+	var coordinate Point
+	var response Pesan
+	response.Status = false
+	mconn := SetConnection2dsphere(mongoenv, dbname, collname)
+
+	err := json.NewDecoder(r.Body).Decode(&coordinate)
+
+	if err != nil {
+		response.Message = "Error parsing application/json: " + err.Error()
+		return ReturnStruct(response)
+	}
+
+	response.Status = true
+	response.Message = MaxDistance(mconn, collname, coordinate)
+
+	return ReturnStruct(response)
+}
+
+func PostMinDistance (mongoenv, dbname, collname string, r *http.Request) string {
+	var coordinate Point
+	var response Pesan
+	response.Status = false
+	mconn := SetConnection2dsphere(mongoenv, dbname, collname)
+
+	err := json.NewDecoder(r.Body).Decode(&coordinate)
+
+	if err != nil {
+		response.Message = "Error parsing application/json: " + err.Error()
+		return ReturnStruct(response)
+	}
+
+	response.Status = true
+	response.Message = MinDistance(mconn, collname, coordinate)
+
+	return ReturnStruct(response)
+}
+
+
+
+
+
 // -------------------------------------------------------------------- Pemrograman --------------------------------------------------------------------
 
 func AmbilDataKegiatan(mongoenv, dbname, collname string) string {
