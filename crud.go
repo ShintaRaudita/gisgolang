@@ -1,4 +1,4 @@
-package befous
+package shinta
 
 import (
 	"os"

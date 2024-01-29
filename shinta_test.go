@@ -1,4 +1,4 @@
-package befous
+package shinta
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ import (
 var privatekey = ""
 var publickey = ""
 var encode = ""
-var dbname = "befous"
+var dbname = "befous" //ganti
 var collname = "geojson"
 
 func TestGeneratePaseto(t *testing.T) {
@@ -49,7 +49,7 @@ func TestGetAllUser(t *testing.T) {
 func TestCobaUsernameExists(t *testing.T) {
 	mconn := SetConnection("MONGOCONNSTRINGENV", dbname)
 	var user User
-	user.Username = "befous44th"
+	user.Username = "shinta123"
 	datagedung := UsernameExists(mconn, "user", user)
 	fmt.Println(datagedung)
 }
@@ -118,7 +118,7 @@ func TestBox(t *testing.T) {
 
 func TestFindUser(t *testing.T) {
 	mconn := SetConnection("mongoenv", dbname)
-	datagedung := FindUser(mconn, collname, User{Username: "ibrohim"})
+	datagedung := FindUser(mconn, collname, User{Username: "shinta"})
 	tokenstring, tokenerr := Encode(datagedung.Name, datagedung.Username, datagedung.Role, os.Getenv("privatekey"))
 	if tokenerr != nil {
 		fmt.Println("Gagal encode token: " + tokenerr.Error())

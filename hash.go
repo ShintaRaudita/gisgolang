@@ -1,4 +1,4 @@
-package befous
+package shinta
 
 import "golang.org/x/crypto/bcrypt"
 
