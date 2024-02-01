@@ -275,12 +275,41 @@ func GetNearSphereDoc(db *mongo.Database, collname string, coordinates Point) (r
 			},
 		},
 	}
-	var doc FullGeoJson
-	err := db.Collection(collname).FindOne(context.TODO(), filter).Decode(&doc)
+
+	var docs []FullGeoJson
+	cur, err := db.Collection(collname).Find(context.TODO(), filter)
 	if err != nil {
-		fmt.Printf("NearSphere: %v\n", err)
+		fmt.Printf("Near: %v\n", err)
+		return ""
 	}
-	return "Koordinat anda dekat dengan " + doc.Properties.Name
+
+	defer cur.Close(context.TODO())
+
+	for cur.Next(context.TODO()) {
+		var doc FullGeoJson
+		err := cur.Decode(&doc)
+		if err != nil {
+			fmt.Printf("Decode Err: %v\n", err)
+			continue
+		}
+		docs = append(docs, doc)
+	}
+
+	if err := cur.Err(); err != nil {
+		fmt.Printf("Cursor Err: %v\n", err)
+		return ""
+	}
+
+	// Ambil nilai properti Name dari setiap dokumen
+	var names []string
+	for _, doc := range docs {
+		names = append(names, doc.Properties.Name)
+	}
+
+	// Gabungkan nilai-nilai dengan koma
+	result = strings.Join(names, ", ")
+
+	return result
 }
 
 func GetBoxDoc(db *mongo.Database, collname string, coordinates Polyline) (result string) {
