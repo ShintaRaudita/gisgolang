@@ -271,7 +271,8 @@ func GetNearSphereDoc(db *mongo.Database, collname string, coordinates Point) (r
 					"type":        "Point",
 					"coordinates": coordinates.Coordinates,
 				},
-				"$maxDistance": 1000,
+				"$maxDistance": coordinates.Max,
+				"$minDistance": coordinates.Min,
 			},
 		},
 	}
