@@ -98,6 +98,7 @@ type Point struct {
 	Coordinates []float64 `json:"coordinates" bson:"coordinates"`
 	Max         int64     `json:"max,omitempty" bson:"max,omitempty"`
 	Min         int64     `json:"min,omitempty" bson:"min,omitempty"`
+	Radius		float64		`json:"min,omitempty" bson:"min,omitempty"`
 }
 
 type Polyline struct {
@@ -112,5 +113,4 @@ type LongLat struct {
 	Latitude  float64 `json:"latitude"`
 	Longitude float64 `json:"longitude"`
 }
-
 
